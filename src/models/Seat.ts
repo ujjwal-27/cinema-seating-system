@@ -8,6 +8,7 @@ export type SeatType = (typeof SeatType)[keyof typeof SeatType];
 
 export const SeatStatus = {
   AVAILABLE: "AVAILABLE",
+  SELECTED: "SELECTED",
   BOOKED: "BOOKED",
   BROKEN: "BROKEN",
 } as const;

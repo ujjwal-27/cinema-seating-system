@@ -8,14 +8,32 @@ import {
     SeatType,
 } from "../models/Seat";
 
-function SeatGrid() {
+import type { Seat } from "../models/Seat";
+
+interface SeatGridProps {
+    seats: Seat[];
+    onSeatClick: (seatId: string) => void;
+}
+
+function SeatGrid({
+    seats,
+    onSeatClick,
+}: SeatGridProps) {
     const rows = Object.keys(rowConfiguration);
 
+    const seatLookup = new Map(
+        seats.map((seat) => [seat.id, seat])
+    );
+
     const getSeatColor = (seatId: string) => {
-        const seat = seatMap.get(seatId);
+        const seat = seatLookup.get(seatId);
 
         if (!seat) {
             return "#ffffff";
+        }
+
+        if (seat.status === SeatStatus.SELECTED) {
+            return "#2ecc71";
         }
 
         if (seat.status === SeatStatus.BROKEN) {
@@ -65,6 +83,9 @@ function SeatGrid() {
                         return (
                             <div
                                 key={`${row}${seatNumber}`}
+                                onClick={() =>
+                                    onSeatClick(`${row}${seatNumber}`)
+                                }
                                 style={{
                                     width: "40px",
                                     height: "40px",
@@ -79,6 +100,7 @@ function SeatGrid() {
                                     ),
 
                                     color: "white",
+                                    cursor: "pointer",
                                 }}
                             >
                                 {seatNumber}
