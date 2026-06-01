@@ -86,7 +86,7 @@ export function generateCinemaLayout(): Seat[] {
         if (seatNumber === null) {
             return;
         }
-        
+
         seats.push({
             id: `${row}${seatNumber}`,
             row,
@@ -101,3 +101,5 @@ export function generateCinemaLayout(): Seat[] {
 }
 
 export const cinemaSeats = generateCinemaLayout();
+
+export { rowConfiguration };
