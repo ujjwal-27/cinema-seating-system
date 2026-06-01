@@ -227,4 +227,8 @@ export function generateCinemaLayout(): Seat[] {
 
 export const cinemaSeats = generateCinemaLayout();
 
+export const seatMap = new Map(
+    cinemaSeats.map((seat) => [seat.id, seat])
+);
+
 export { rowConfiguration };
