@@ -1,5 +1,13 @@
-import type { Seat } from "../models/Seat";
-import { SeatStatus, SeatType } from "../models/Seat";
+import {
+    SeatStatus,
+    SeatType,
+} from "../models/Seat";
+
+import type {
+    Seat,
+    SeatStatus as SeatStatusValue,
+    SeatType as SeatTypeValue,
+} from "../models/Seat";
 
 /**
  * Layout based on the cinema seating plan provided in the assignment specification.
@@ -155,18 +163,61 @@ const rowConfiguration: Record<string, (number | null)[]> = {
 export function generateCinemaLayout(): Seat[] {
     const seats: Seat[] = [];
 
+    const vipRows = ["E", "F", "G", "H"];
+
+    const accessibilitySeats = [
+        "N1",
+        "N2",
+        "N3",
+        "O1",
+        "O2",
+        "O3",
+    ];
+
+    const brokenSeats = [
+        "C7",
+        "E25",
+        "J25",
+        "L6",
+        "M10",
+    ];
+
     Object.entries(rowConfiguration).forEach(([row, seatNumbers]) => {
         seatNumbers.forEach((seatNumber) => {
             if (seatNumber === null) {
                 return;
             }
 
+            const seatId = `${row}${seatNumber}`;
+
+            let type: SeatType = SeatType.STANDARD;
+            let status: SeatStatus = SeatStatus.AVAILABLE;
+
+            // VIP seats
+            if (
+                vipRows.includes(row) &&
+                seatNumber >= 8 &&
+                seatNumber <= 20
+            ) {
+                type = SeatType.VIP;
+            }
+
+            // Accessibility seats
+            if (accessibilitySeats.includes(seatId)) {
+                type = SeatType.ACCESSIBILITY;
+            }
+
+            // Broken seats
+            if (brokenSeats.includes(seatId)) {
+                status = SeatStatus.BROKEN;
+            }
+
             seats.push({
-                id: `${row}${seatNumber}`,
+                id: seatId,
                 row,
                 number: seatNumber,
-                type: SeatType.STANDARD,
-                status: SeatStatus.AVAILABLE,
+                type,
+                status,
             });
         });
     });
