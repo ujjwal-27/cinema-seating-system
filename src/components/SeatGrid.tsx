@@ -1,6 +1,5 @@
 import {
     rowConfiguration,
-    seatMap,
 } from "../data/cinemaLayout";
 
 import {

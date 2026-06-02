@@ -5,8 +5,6 @@ import {
 
 import type {
     Seat,
-    SeatStatus as SeatStatusValue,
-    SeatType as SeatTypeValue,
 } from "../models/Seat";
 
 /**
