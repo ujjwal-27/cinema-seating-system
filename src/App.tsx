@@ -8,6 +8,36 @@ import { SeatStatus, SeatType } from "./models/Seat";
 import ControlPanel from "./components/ControlPanel";
 import { SeatAllocator } from "./services/SeatAllocator";
 
+function LegendItem({
+  color,
+  label,
+}: {
+  color: string;
+  label: string;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+      }}
+    >
+      <div
+        style={{
+          width: "20px",
+          height: "20px",
+          backgroundColor: color,
+          borderRadius: "4px",
+          border: "1px solid black",
+        }}
+      />
+
+      <span>{label}</span>
+    </div>
+  );
+}
+
 function App() {
   const [seats, setSeats] = useState(cinemaSeats);
 
@@ -150,6 +180,46 @@ function App() {
         onSeatTypeChange={setSeatType}
         onAutoAllocate={handleAutoAllocate}
       />
+
+      <div
+        style={{
+          display: "flex",
+          gap: "16px",
+          marginTop: "20px",
+          marginBottom: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        <LegendItem
+          color="#3498db"
+          label="Standard"
+        />
+
+        <LegendItem
+          color="#8e44ad"
+          label="VIP"
+        />
+
+        <LegendItem
+          color="#00cfe8"
+          label="Accessibility"
+        />
+
+        <LegendItem
+          color="#e74c3c"
+          label="Broken"
+        />
+
+        <LegendItem
+          color="#2ecc71"
+          label="Selected"
+        />
+
+        <LegendItem
+          color="#2c3e50"
+          label="Booked"
+        />
+      </div>
 
       <button
         onClick={handleConfirmBooking}
