@@ -26,7 +26,10 @@ function App() {
           return seat;
         }
 
-        if (seat.status === SeatStatus.BROKEN) {
+        if (
+          seat.status === SeatStatus.BROKEN ||
+          seat.status === SeatStatus.BOOKED
+        ) {
           return seat;
         }
 
@@ -85,6 +88,21 @@ function App() {
     );
   };
 
+  const handleConfirmBooking = () => {
+    setSeats((currentSeats) =>
+      currentSeats.map((seat) => {
+        if (seat.status === SeatStatus.SELECTED) {
+          return {
+            ...seat,
+            status: SeatStatus.BOOKED,
+          };
+        }
+
+        return seat;
+      })
+    );
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Cinema Seating Allocation System</h1>
@@ -96,6 +114,15 @@ function App() {
         onSeatTypeChange={setSeatType}
         onAutoAllocate={handleAutoAllocate}
       />
+
+      <button
+        onClick={handleConfirmBooking}
+        style={{
+          marginBottom: "20px",
+        }}
+      >
+        Confirm Booking
+      </button>
 
       <SeatGrid
         seats={seats}

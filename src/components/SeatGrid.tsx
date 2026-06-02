@@ -36,6 +36,10 @@ function SeatGrid({
             return "#2ecc71";
         }
 
+        if (seat.status === SeatStatus.BOOKED) {
+            return "#2c3e50";
+        }
+
         if (seat.status === SeatStatus.BROKEN) {
             return "#e74c3c";
         }
