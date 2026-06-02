@@ -68,6 +68,11 @@ function App() {
         validBlocks
       );
 
+    if (bestBlock.length === 0) {
+      alert("No suitable seats available.");
+      return;
+    }
+
     const selectedIds = new Set(
       bestBlock.map((seat) => seat.id)
     );
