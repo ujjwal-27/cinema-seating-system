@@ -49,6 +49,9 @@ function App() {
       SeatType.STANDARD
     );
 
+  const [adminOverride, setAdminOverride] =
+    useState(false);
+
   const handleSeatClick = (seatId: string) => {
     setSeats((currentSeats) =>
       currentSeats.map((seat) => {
@@ -76,7 +79,9 @@ function App() {
 
   const handleAutoAllocate = () => {
     const resetSeats = seats.map((seat) => {
-      if (seat.status === SeatStatus.SELECTED) {
+      if (
+        seat.status === SeatStatus.SELECTED
+      ) {
         return {
           ...seat,
           status: SeatStatus.AVAILABLE,
@@ -86,17 +91,30 @@ function App() {
       return seat;
     });
 
-    const validBlocks =
-      SeatAllocator.findValidSeatBlocks(
-        resetSeats,
-        groupSize,
-        seatType
-      );
+    let bestBlock: typeof seats = [];
 
-    const bestBlock =
-      SeatAllocator.rankSeatBlocks(
-        validBlocks
-      );
+    if (adminOverride) {
+      bestBlock = resetSeats
+        .filter(
+          (seat) =>
+            seat.type === seatType &&
+            seat.status ===
+            SeatStatus.AVAILABLE
+        )
+        .slice(0, groupSize);
+    } else {
+      const validBlocks =
+        SeatAllocator.findValidSeatBlocks(
+          resetSeats,
+          groupSize,
+          seatType
+        );
+
+      bestBlock =
+        SeatAllocator.rankSeatBlocks(
+          validBlocks
+        );
+    }
 
     if (bestBlock.length === 0) {
       alert("No suitable seats available.");
@@ -176,6 +194,10 @@ function App() {
       <ControlPanel
         groupSize={groupSize}
         seatType={seatType}
+        adminOverride={adminOverride}
+        onAdminOverrideChange={
+          setAdminOverride
+        }
         onGroupSizeChange={setGroupSize}
         onSeatTypeChange={setSeatType}
         onAutoAllocate={handleAutoAllocate}

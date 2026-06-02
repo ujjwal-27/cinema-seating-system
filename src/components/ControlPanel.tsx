@@ -2,15 +2,31 @@ import { SeatType } from "../models/Seat";
 
 interface ControlPanelProps {
     groupSize: number;
+
     seatType: SeatType;
-    onGroupSizeChange: (size: number) => void;
-    onSeatTypeChange: (type: SeatType) => void;
+
+    adminOverride: boolean;
+
+    onAdminOverrideChange: (
+        value: boolean
+    ) => void;
+
+    onGroupSizeChange: (
+        value: number
+    ) => void;
+
+    onSeatTypeChange: (
+        value: SeatType
+    ) => void;
+
     onAutoAllocate: () => void;
 }
 
 function ControlPanel({
     groupSize,
     seatType,
+    adminOverride,
+    onAdminOverrideChange,
     onGroupSizeChange,
     onSeatTypeChange,
     onAutoAllocate,
@@ -62,6 +78,20 @@ function ControlPanel({
                     </option>
                 </select>
             </div>
+
+            <label>
+                <input
+                    type="checkbox"
+                    checked={adminOverride}
+                    onChange={(e) =>
+                        onAdminOverrideChange(
+                            e.target.checked
+                        )
+                    }
+                />
+
+                Admin Override
+            </label>
 
             <button onClick={onAutoAllocate}>
                 Auto Allocate
