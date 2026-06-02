@@ -59,60 +59,93 @@ function SeatGrid({
         <div>
             <h2>Cinema Seating Layout</h2>
 
-            {rows.map((row) => (
-                <div
-                    key={row}
-                    style={{
-                        display: "flex",
-                        gap: "6px",
-                        marginBottom: "8px",
-                        alignItems: "center",
-                    }}
-                >
-                    <strong style={{ width: "30px" }}>{row}</strong>
+            <div
+                style={{
+                    display: "inline-block",
+                }}
+            >
 
-                    {rowConfiguration[row].map((seatNumber, index) => {
-                        if (seatNumber === null) {
+                {rows.map((row) => (
+                    <div
+                        key={row}
+                        style={{
+                            display: "flex",
+                            gap: "6px",
+                            marginBottom: "8px",
+                            alignItems: "center",
+                        }}
+                    >
+                        <strong style={{ width: "30px" }}>{row}</strong>
+
+                        {rowConfiguration[row].map((seatNumber, index) => {
+                            if (seatNumber === null) {
+                                return (
+                                    <div
+                                        key={`gap-${index}`}
+                                        style={{
+                                            width: "40px",
+                                            height: "40px",
+                                        }}
+                                    />
+                                );
+                            }
+
                             return (
                                 <div
-                                    key={`gap-${index}`}
+                                    key={`${row}${seatNumber}`}
+                                    onClick={() =>
+                                        onSeatClick(`${row}${seatNumber}`)
+                                    }
                                     style={{
                                         width: "40px",
                                         height: "40px",
+                                        border: "1px solid black",
+                                        borderRadius: "4px",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+
+                                        backgroundColor: getSeatColor(
+                                            `${row}${seatNumber}`
+                                        ),
+
+                                        color: "white",
+                                        cursor: "pointer",
                                     }}
-                                />
+                                >
+                                    {seatNumber}
+                                </div>
                             );
-                        }
+                        })}
+                    </div>
+                ))}
 
-                        return (
-                            <div
-                                key={`${row}${seatNumber}`}
-                                onClick={() =>
-                                    onSeatClick(`${row}${seatNumber}`)
-                                }
-                                style={{
-                                    width: "40px",
-                                    height: "40px",
-                                    border: "1px solid black",
-                                    borderRadius: "4px",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-
-                                    backgroundColor: getSeatColor(
-                                        `${row}${seatNumber}`
-                                    ),
-
-                                    color: "white",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                {seatNumber}
-                            </div>
-                        );
-                    })}
+                <div
+                    style={{
+                        marginTop: "40px",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    <div
+                        style={{
+                            width: "700px",
+                            height: "60px",
+                            background:
+                                "linear-gradient(to right, #6dd5ed, #2193b0, #6dd5ed)",
+                            borderRadius: "4px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            color: "white",
+                            fontSize: "32px",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        SCREEN
+                    </div>
                 </div>
-            ))}
+            </div>
         </div>
     );
 }
