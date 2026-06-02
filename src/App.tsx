@@ -4,10 +4,20 @@ import SeatGrid from "./components/SeatGrid";
 
 import { cinemaSeats } from "./data/cinemaLayout";
 
-import { SeatStatus } from "./models/Seat";
+import { SeatStatus, SeatType } from "./models/Seat";
+import ControlPanel from "./components/ControlPanel";
+import { SeatAllocator } from "./services/SeatAllocator";
 
 function App() {
   const [seats, setSeats] = useState(cinemaSeats);
+
+  const [groupSize, setGroupSize] =
+    useState(1);
+
+  const [seatType, setSeatType] =
+    useState<SeatType>(
+      SeatType.STANDARD
+    );
 
   const handleSeatClick = (seatId: string) => {
     setSeats((currentSeats) =>
@@ -31,9 +41,61 @@ function App() {
     );
   };
 
+  const handleAutoAllocate = () => {
+    const resetSeats = seats.map((seat) => {
+      if (seat.status === SeatStatus.SELECTED) {
+        return {
+          ...seat,
+          status: SeatStatus.AVAILABLE,
+        };
+      }
+
+      return seat;
+    });
+
+    const validBlocks =
+      SeatAllocator.findValidSeatBlocks(
+        resetSeats,
+        groupSize,
+        seatType
+      );
+
+    const bestBlock =
+      SeatAllocator.rankSeatBlocks(
+        validBlocks
+      );
+
+    const selectedIds = new Set(
+      bestBlock.map((seat) => seat.id)
+    );
+
+    setSeats(
+      resetSeats.map((seat) => {
+        if (
+          selectedIds.has(seat.id)
+        ) {
+          return {
+            ...seat,
+            status: SeatStatus.SELECTED,
+          };
+        }
+
+        return seat;
+      })
+    );
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Cinema Seating Allocation System</h1>
+
+      <ControlPanel
+        groupSize={groupSize}
+        seatType={seatType}
+        onGroupSizeChange={setGroupSize}
+        onSeatTypeChange={setSeatType}
+        onAutoAllocate={handleAutoAllocate}
+      />
 
       <SeatGrid
         seats={seats}
