@@ -108,6 +108,37 @@ function App() {
     );
   };
 
+  const handleMassBooking = () => {
+    const availableSeats = seats.filter(
+      (seat) =>
+        seat.status === SeatStatus.AVAILABLE &&
+        seat.type === SeatType.STANDARD
+    );
+
+    const shuffled = [...availableSeats].sort(
+      () => Math.random() - 0.5
+    );
+
+    const seatsToBook = shuffled.slice(0, 80);
+
+    const bookedIds = new Set(
+      seatsToBook.map((seat) => seat.id)
+    );
+
+    setSeats(
+      seats.map((seat) => {
+        if (bookedIds.has(seat.id)) {
+          return {
+            ...seat,
+            status: SeatStatus.BOOKED,
+          };
+        }
+
+        return seat;
+      })
+    );
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Cinema Seating Allocation System</h1>
@@ -127,6 +158,15 @@ function App() {
         }}
       >
         Confirm Booking
+      </button>
+
+      <button
+        onClick={handleMassBooking}
+        style={{
+          marginLeft: "10px",
+        }}
+      >
+        Simulate Crowd
       </button>
 
       <SeatGrid
