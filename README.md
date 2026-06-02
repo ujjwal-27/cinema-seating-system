@@ -70,22 +70,25 @@ The application includes a crowd simulation feature to test algorithm behaviour 
 
 # Project Structure
 
+```text
 src/
 │
 ├── components/
-│ ├── SeatGrid.tsx
-│ └── ControlPanel.tsx
+│   ├── SeatGrid.tsx
+│   └── ControlPanel.tsx
 │
 ├── data/
-│ └── cinemaLayout.ts
+│   └── cinemaLayout.ts
 │
 ├── models/
-│ └── Seat.ts
+│   └── Seat.ts
 │
 ├── services/
-│ └── SeatAllocator.ts
+│   └── SeatAllocator.ts
 │
 └── App.tsx
+```
+
 
 ---
 
