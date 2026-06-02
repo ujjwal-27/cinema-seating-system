@@ -1,6 +1,11 @@
 import type { Seat } from "../models/Seat";
 import { SeatStatus, SeatType } from "../models/Seat";
 
+interface SeatBlockScore {
+    seats: Seat[];
+    score: number;
+}
+
 export class SeatAllocator {
     static findValidSeatBlocks(
         seats: Seat[],
@@ -42,6 +47,33 @@ export class SeatAllocator {
         return validBlocks;
     }
 
+    static evaluateSeatBlocks(
+        blocks: Seat[][]
+    ): SeatBlockScore[] {
+        return blocks.map((block) => ({
+            seats: block,
+            score:
+                SeatAllocator.calculateCenterScore(
+                    block
+                ),
+        }));
+    }
+
+    static rankSeatBlocks(
+        blocks: Seat[][]
+    ): Seat[] {
+        const scoredBlocks =
+            SeatAllocator.evaluateSeatBlocks(
+                blocks
+            );
+
+        scoredBlocks.sort(
+            (a, b) => b.score - a.score
+        );
+
+        return scoredBlocks[0]?.seats ?? [];
+    }
+
     private static isContinuousBlock(
         block: Seat[]
     ): boolean {
@@ -55,5 +87,24 @@ export class SeatAllocator {
         }
 
         return true;
+    }
+
+    private static calculateCenterScore(
+        block: Seat[]
+    ): number {
+        const averageSeatNumber =
+            block.reduce(
+                (sum, seat) => sum + seat.number,
+                0
+            ) / block.length;
+
+        const idealCentre = 14;
+
+        return (
+            100 -
+            Math.abs(
+                idealCentre - averageSeatNumber
+            )
+        );
     }
 }
