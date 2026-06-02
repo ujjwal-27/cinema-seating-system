@@ -1,73 +1,155 @@
-# React + TypeScript + Vite
+# Cinema Seating Allocation System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The Cinema Seating Allocation System is a React and TypeScript based application developed to simulate intelligent cinema seat booking and automatic seat allocation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The system allows users to:
 
-## React Compiler
+* View a cinema seating layout
+* Select seat categories
+* Automatically allocate optimal seats
+* Confirm bookings
+* Simulate crowded cinema environments
+* Handle broken and unavailable seats
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The project was developed as part of an Advanced Topics in Software Engineering assignment.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Cinema Layout
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Multi-row cinema seating plan
+* Visual aisle separation using null-based layout modelling
+* Cinema screen display
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Seat Categories
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The system supports multiple seat types:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* Standard Seats
+* VIP Seats
+* Accessibility Seats
+* Broken Seats
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Automatic Seat Allocation
+
+The allocation algorithm:
+
+* Finds valid contiguous seat blocks
+* Filters by seat type
+* Avoids unavailable seats
+* Scores seat blocks
+* Selects the highest-ranked seating option
+
+## Booking Management
+
+Users can:
+
+* Manually select seats
+* Automatically allocate seats
+* Confirm bookings
+* Prevent double booking
+
+## Crowd Simulation
+
+The application includes a crowd simulation feature to test algorithm behaviour in heavily occupied cinema conditions.
+
+---
+
+# Technologies Used
+
+* React
+* TypeScript
+* Vite
+* CSS Inline Styling
+
+---
+
+# Project Structure
+
+src/
+│
+├── components/
+│ ├── SeatGrid.tsx
+│ └── ControlPanel.tsx
+│
+├── data/
+│ └── cinemaLayout.ts
+│
+├── models/
+│ └── Seat.ts
+│
+├── services/
+│ └── SeatAllocator.ts
+│
+└── App.tsx
+
+---
+
+# Seat Allocation Algorithm
+
+The system uses a rule-based seat allocation algorithm.
+
+## Allocation Process
+
+1. Filter seats by:
+
+   * Seat type
+   * Availability
+   * Row
+
+2. Find continuous seat blocks matching the requested group size
+
+3. Score candidate blocks using:
+
+   * Centre proximity
+   * Preferred row weighting
+
+4. Select the highest-ranked block
+
+## Allocation Priorities
+
+The algorithm prioritises:
+
+* Consecutive seating
+* Central viewing positions
+* Preferred middle rows
+* Avoiding broken or booked seats
+
+---
+
+# How to Run the Project
+
+## Install Dependencies
+
+npm install
+
+## Start Development Server
+
+npm run dev
+
+## Build Production Version
+
+npm run build
+
+---
+
+# Future Improvements
+
+Potential future enhancements include:
+
+* Database integration
+* Real-time booking updates
+* User authentication
+* Payment integration
+* Advanced fragmentation analysis
+* Dynamic pricing
+
+---
+
+# Author
+
+Ujjwal Shrestha
