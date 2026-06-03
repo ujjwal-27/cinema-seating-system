@@ -46,7 +46,7 @@ function ControlPanel({
                 <input
                     type="number"
                     min={1}
-                    max={10}
+                    max={7}
                     value={groupSize}
                     onChange={(e) =>
                         onGroupSizeChange(Number(e.target.value))
