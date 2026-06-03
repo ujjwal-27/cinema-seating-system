@@ -25,8 +25,8 @@ function LegendItem({
     >
       <div
         style={{
-          width: "20px",
-          height: "20px",
+          width: "24px",
+          height: "24px",
           backgroundColor: color,
           borderRadius: "4px",
           border: "1px solid black",
@@ -191,75 +191,114 @@ function App() {
     <div style={{ padding: "20px" }}>
       <h1>Cinema Seating Allocation System</h1>
 
-      <ControlPanel
-        groupSize={groupSize}
-        seatType={seatType}
-        adminOverride={adminOverride}
-        onAdminOverrideChange={
-          setAdminOverride
-        }
-        onGroupSizeChange={setGroupSize}
-        onSeatTypeChange={setSeatType}
-        onAutoAllocate={handleAutoAllocate}
-      />
-
       <div
         style={{
-          display: "flex",
-          gap: "16px",
-          marginTop: "20px",
-          marginBottom: "20px",
-          flexWrap: "wrap",
+          backgroundColor: "#f8f9fa",
+          padding: "20px",
+          borderRadius: "12px",
+          marginBottom: "25px",
+          border: "1px solid #dcdcdc",
         }}
       >
-        <LegendItem
-          color="#3498db"
-          label="Standard"
-        />
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: "16px",
+            marginBottom: "20px",
+          }}
+        >
+          <ControlPanel
+            groupSize={groupSize}
+            seatType={seatType}
+            adminOverride={adminOverride}
+            onAdminOverrideChange={
+              setAdminOverride
+            }
+            onGroupSizeChange={setGroupSize}
+            onSeatTypeChange={setSeatType}
+            onAutoAllocate={handleAutoAllocate}
+          />
+        </div>
 
-        <LegendItem
-          color="#8e44ad"
-          label="VIP"
-        />
+        <div
+          style={{
+            display: "flex",
+            gap: "18px",
+            flexWrap: "wrap",
+            marginBottom: "20px",
+          }}
+        >
+          <LegendItem
+            color="#3498db"
+            label="Standard"
+          />
 
-        <LegendItem
-          color="#00cfe8"
-          label="Accessibility"
-        />
+          <LegendItem
+            color="#8e44ad"
+            label="VIP"
+          />
 
-        <LegendItem
-          color="#e74c3c"
-          label="Broken"
-        />
+          <LegendItem
+            color="#00cfe8"
+            label="Accessibility"
+          />
 
-        <LegendItem
-          color="#2ecc71"
-          label="Selected"
-        />
+          <LegendItem
+            color="#e74c3c"
+            label="Broken"
+          />
 
-        <LegendItem
-          color="#2c3e50"
-          label="Booked"
-        />
+          <LegendItem
+            color="#2ecc71"
+            label="Selected"
+          />
+
+          <LegendItem
+            color="#2c3e50"
+            label="Booked"
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+            flexWrap: "wrap",
+          }}
+        >
+          <button
+            onClick={handleConfirmBooking}
+            style={{
+              padding: "10px 18px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#2ecc71",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            Confirm Booking
+          </button>
+
+          <button
+            onClick={handleMassBooking}
+            style={{
+              padding: "10px 18px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#34495e",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            Simulate Crowd
+          </button>
+        </div>
       </div>
-
-      <button
-        onClick={handleConfirmBooking}
-        style={{
-          marginBottom: "20px",
-        }}
-      >
-        Confirm Booking
-      </button>
-
-      <button
-        onClick={handleMassBooking}
-        style={{
-          marginLeft: "10px",
-        }}
-      >
-        Simulate Crowd
-      </button>
 
       <SeatGrid
         seats={seats}
