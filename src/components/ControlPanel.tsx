@@ -34,14 +34,26 @@ function ControlPanel({
     return (
         <div
             style={{
-                marginBottom: "20px",
                 display: "flex",
-                gap: "16px",
+                flexWrap: "wrap",
                 alignItems: "center",
+                gap: "18px",
             }}
         >
-            <div>
-                <label>Group Size: </label>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                }}
+            >
+                <label
+                    style={{
+                        fontWeight: "600",
+                    }}
+                >
+                    Group Size:
+                </label>
 
                 <input
                     type="number"
@@ -49,21 +61,48 @@ function ControlPanel({
                     max={7}
                     value={groupSize}
                     onChange={(e) =>
-                        onGroupSizeChange(Number(e.target.value))
+                        onGroupSizeChange(
+                            Number(e.target.value)
+                        )
                     }
+                    style={{
+                        width: "70px",
+                        padding: "8px",
+                        borderRadius: "8px",
+                        border: "1px solid #ccc",
+                        fontSize: "16px",
+                    }}
                 />
             </div>
 
-            <div>
-                <label>Seat Type: </label>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                }}
+            >
+                <label
+                    style={{
+                        fontWeight: "600",
+                    }}
+                >
+                    Seat Type:
+                </label>
 
                 <select
                     value={seatType}
                     onChange={(e) =>
                         onSeatTypeChange(
-                            e.target.value as typeof seatType
+                            e.target.value as SeatType
                         )
                     }
+                    style={{
+                        padding: "8px 12px",
+                        borderRadius: "8px",
+                        border: "1px solid #ccc",
+                        fontSize: "16px",
+                    }}
                 >
                     <option value={SeatType.STANDARD}>
                         Standard
@@ -73,13 +112,23 @@ function ControlPanel({
                         VIP
                     </option>
 
-                    <option value={SeatType.ACCESSIBILITY}>
+                    <option
+                        value={
+                            SeatType.ACCESSIBILITY
+                        }
+                    >
                         Accessibility
                     </option>
                 </select>
             </div>
 
-            <label>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                }}
+            >
                 <input
                     type="checkbox"
                     checked={adminOverride}
@@ -88,12 +137,35 @@ function ControlPanel({
                             e.target.checked
                         )
                     }
+                    style={{
+                        width: "18px",
+                        height: "18px",
+                        cursor: "pointer",
+                    }}
                 />
 
-                Admin Override
-            </label>
+                <label
+                    style={{
+                        fontWeight: "600",
+                    }}
+                >
+                    Admin Override
+                </label>
+            </div>
 
-            <button onClick={onAutoAllocate}>
+            <button
+                onClick={onAutoAllocate}
+                style={{
+                    padding: "10px 18px",
+                    borderRadius: "8px",
+                    border: "none",
+                    backgroundColor: "#3498db",
+                    color: "white",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    fontSize: "15px",
+                }}
+            >
                 Auto Allocate
             </button>
         </div>
