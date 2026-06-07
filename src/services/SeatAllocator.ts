@@ -191,4 +191,3 @@ export class SeatAllocator {
         return rowScores[row] ?? 0;
     }
 }
-
